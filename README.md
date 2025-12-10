@@ -62,7 +62,7 @@ sistema-gestion-inventario/
 ├── inventario.txt      # Archivo de persistencia (Generado automáticamente)
 ├── .gitignore          # Configuración de exclusiones de Git
 └── README.md           # Documentación del proyecto
-
+```
 ## 👨‍💻 Autor
 **Augusto José Melara Milla**
 *Estudiante de Ingeniería en Ciencias de la Computación*
