@@ -1,90 +1,72 @@
 # 📦 Sistema de Gestión de Inventario en C
 
 ## 📖 Descripción
-Sistema completo de gestión de inventario desarrollado en lenguaje C. Este proyecto implementa una solución robusta para el manejo de productos, incluyendo operaciones CRUD (Crear, Leer, Actualizar, Borrar), reportes estadísticos y persistencia de datos mediante archivos planos (CSV).
+Sistema profesional de gestión de inventario desarrollado en lenguaje C. Este proyecto implementa una solución robusta para el control de stock, integrando operaciones CRUD, reportes financieros, alertas de existencias y persistencia de datos en archivos planos (CSV).
+
+El sistema ha sido diseñado con un enfoque en la **integridad de datos** y la **seguridad operativa**, implementando validaciones estrictas contra errores de usuario y vulnerabilidades de memoria.
 
 ## ✨ Características Principales
-- ✅ **Gestión de Productos:** Agregar ítems con validación de códigos únicos.
-- ✅ **Modificación Flexible:** Edición de nombre, cantidad o precio de productos existentes.
-- ✅ **Búsqueda Rápida:** Algoritmo de búsqueda lineal por código.
-- ✅ **Alertas de Stock:** Reporte automático de productos con bajas existencias (<10 unidades).
-- ✅ **Estadísticas:** Cálculo automático de stock físico total y valoración monetaria del inventario.
-- ✅ **Persistencia:** Guardado y carga automática en `inventario.txt` (formato CSV).
-- ✅ **Integridad de Datos:** Campo `total` calculado y sincronizado automáticamente en la estructura.
 
-## 🛠️ Tecnologías Utilizadas
-- **Lenguaje:** C (Estándar C99)
-- **Compilador:** GCC
-- **IDE Recomendado:** VS Code / Dev-C++
-- **Sistema Operativo:** Windows (Optimizado para consola de Windows)
+### 🛠️ Gestión de Productos (CRUD)
+- **Agregar:** Registro de nuevos productos con validación de unicidad por código.
+- **Modificar:** Edición flexible de nombre, cantidad o precio, con actualización automática del valor total.
+- **Mostrar:** Visualización tabular alineada de todo el inventario.
+- **Buscar:** Localización inmediata de productos mediante código único.
 
-## 📋 Requisitos del Sistema
-- Compilador GCC instalado y configurado en el PATH.
-- Sistema Operativo Windows (necesario para el funcionamiento estético de `system("cls")` y `system("pause")`).
+### 📊 Reportes y Estadísticas
+- **Alerta de Stock Bajo:** Filtra automáticamente productos con menos de 10 unidades.
+- **Valoración Financiera:** Cálculo en tiempo real del valor total del inventario (Dinero invertido).
+- **Métricas:** Conteo de productos únicos y stock físico total.
 
-## 🚀 Instrucciones de Compilación y Ejecución
+### 💾 Persistencia de Datos
+- **Base de Datos CSV:** Los datos se guardan en `inventario.txt` separados por comas.
+- **Auto-Guardado:** El sistema guarda los cambios automáticamente al cerrar.
+- **Auto-Recuperación:** Carga inteligente de datos al iniciar el programa; si el archivo no existe, inicia limpio sin errores.
+- **Sanitización:** Reemplazo automático de comas por espacios en los nombres para proteger la estructura del archivo.
 
-Para compilar y ejecutar el proyecto, abre tu terminal en la carpeta del proyecto y ejecuta los siguientes comandos:
+## 🔒 Seguridad y Robustez (DevOps Audit)
+Este código cumple con estándares altos de programación defensiva:
+- ✅ **Protección Buffer Overflow:** Uso de `scanf(" %49[^\n]")` para limitar la lectura de cadenas.
+- ✅ **Validación de Tipos:** Verificación del retorno de `scanf` para evitar bucles infinitos si se ingresan letras en lugar de números.
+- ✅ **Limpieza de Buffer:** Implementación de `while(getchar() != '\n')` para sanear la entrada estándar.
+- ✅ **Integridad Estructural:** El campo `total` se recalcula dinámicamente para asegurar consistencia matemática.
 
-### 1. Compilar
-```bash
-gcc -o inventario main.c -std=c99 -Wall
-2. Ejecutar
-Bash
+## 📋 Requisitos Técnicos
+- **Lenguaje:** C (Estándar C99 o superior).
+- **Compilador:** GCC (Recomendado) o compatible.
+- **Sistema Operativo:** Windows (Requerido para el funcionamiento estético de `cls` y `pause`).
 
-inventario.exe
-📂 Estructura del Proyecto
-Plaintext
+## 🚀 Instrucciones de Instalación
 
+1.  **Clonar el repositorio:**
+    ```bash
+    git clone [https://github.com/TU_USUARIO/sistema-gestion-inventario.git](https://github.com/TU_USUARIO/sistema-gestion-inventario.git)
+    ```
+
+2.  **Compilar el código fuente:**
+    Abre tu terminal en la carpeta del proyecto y ejecuta:
+    ```bash
+    gcc -o inventario main.c -std=c99 -Wall
+    ```
+
+3.  **Ejecutar la aplicación:**
+    ```bash
+    inventario.exe
+    ```
+
+## 📂 Estructura del Proyecto
+
+```text
 sistema-gestion-inventario/
-├── main.c              # Código fuente principal (Lógica del sistema)
-├── inventario.txt      # Base de datos en texto plano (Generado automáticamente)
-├── .gitignore          # Archivos ignorados por Git
+├── main.c              # Código fuente (Lógica completa)
+├── inventario.txt      # Archivo de persistencia (Generado automáticamente)
+├── .gitignore          # Configuración de exclusiones de Git
 └── README.md           # Documentación del proyecto
-🎯 Funcionalidades Detalladas
-1. Menú Interactivo
-Interfaz de consola limpia con limpieza de pantalla.
-
-Validación de entradas numéricas para evitar errores de ejecución.
-
-Ciclo infinito con salida controlada por el usuario.
-
-2. Gestión CRUD
-Agregar: Valida que el código no exista, que el nombre no esté vacío y que los valores numéricos sean positivos.
-
-Modificar: Permite buscar un producto y editar campos específicos sin perder la información previa.
-
-Mostrar: Despliega una tabla alineada con todos los productos cargados en memoria.
-
-3. Reportes y Búsqueda
-Búsqueda: Localiza productos por su código único.
-
-Stock Bajo: Filtra y muestra solo los productos con menos de 10 unidades.
-
-Estadísticas: Muestra la cantidad de productos únicos, el total de artículos y el valor total del inventario ($).
-
-4. Persistencia (Archivos)
-Auto-Guardado: Los datos se guardan automáticamente al seleccionar la opción "Salir".
-
-Auto-Carga: Si existe inventario.txt, el sistema lo carga al iniciar.
-
-Formato CSV: Los datos se separan por comas. El sistema sanitiza los nombres (cambiando comas por espacios) para proteger la estructura del archivo.
-
-🔒 Seguridad y Robustez
-Este proyecto implementa prácticas de programación defensiva:
-
-🛡️ Protección contra Buffer Overflow: Uso de scanf(" %49[^\n]") para limitar la entrada de cadenas.
-
-🛡️ Validación de Tipos: Verificación del retorno de scanf para evitar bucles infinitos si se ingresan letras en lugar de números.
-
-🛡️ Limpieza de Buffer: Implementación de while(getchar() != '\n') para sanear la entrada estándar.
-
-🛡️ Límites de Array: Verificación de límites (totalProductos < 100) antes de agregar nuevos registros.
 
 👨‍💻 Autor
-Augusto José Melara Milla Estudiante de Ingeniería en Ciencias de la Computación
+Augusto José Melara Milla Estudiante de Ingeniería en Ciencias de la Computación Universidad Católica de Honduras (UNICAH)
 
-📅 Fecha: 10/12/2025
+📅 Fecha de Finalización: 10 de Diciembre, 2025
 
 📄 Licencia
 Este proyecto es de uso académico y educativo.
