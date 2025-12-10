@@ -1,0 +1,29 @@
+# --- Ejecutables y Compilación ---
+*.exe
+*.out
+*.o
+*.obj
+# Si usas carpetas de salida comunes:
+bin/
+obj/
+Debug/
+Release/
+
+# --- Datos Locales (Base de Datos) ---
+# Se ignora para no subir tus pruebas locales, 
+# pero el programa creará uno nuevo si no existe.
+inventario.txt
+
+# --- Sistema Operativo ---
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# --- IDEs y Editores ---
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.log
