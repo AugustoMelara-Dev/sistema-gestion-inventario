@@ -119,12 +119,135 @@ int main() {
     return 0;
 }
 
-int existe_codigo(int cod) { return 0; }
-int agregar_producto() { return 0; }
-int modificar_producto() { return 0; }
-int mostrar_todos() { return 0; }
-int buscar_producto() { return 0; }
-int reporte_stock_bajo() { return 0; }
-int reporte_estadisticas() { return 0; }
-int guardar_inventario() { return 0; }
-int cargar_inventario() { return 0; }
+// Función auxiliar
+int existe_codigo(int cod) {
+    for (int i = 0; i < totalProductos; i++) {
+        if (inventario[i].codigo == cod) return 1;
+    }
+    return 0;
+}
+
+// Gestión de Productos (CRUD) 
+int agregar_producto() {
+    if (totalProductos >= 100) {
+        printf("Inventario lleno (Max 100).\n");
+        return 0;
+    }
+
+    int tempCodigo;
+    printf("\n--- AGREGAR PRODUCTO ---\n");
+    printf("Ingrese Codigo: ");
+    if (scanf("%d", &tempCodigo) != 1) {
+        while(getchar() != '\n');
+        return 0;
+    }
+
+    if (existe_codigo(tempCodigo) == 1) {
+        printf("Error: El codigo %d ya existe.\n", tempCodigo);
+        return 0;
+    }
+
+    inventario[totalProductos].codigo = tempCodigo;
+
+    printf("Ingrese Nombre: ");
+    scanf(" %49[^\n]", inventario[totalProductos].nombre);
+
+    for(int i = 0; inventario[totalProductos].nombre[i] != '\0'; i++) {
+        if(inventario[totalProductos].nombre[i] == ',') {
+            inventario[totalProductos].nombre[i] = ' '; 
+        }
+    }
+
+    if (strlen(inventario[totalProductos].nombre) == 0) return 0;
+
+    printf("Ingrese Cantidad: ");
+    if (scanf("%d", &inventario[totalProductos].cantidad) != 1) {
+        while(getchar() != '\n');
+        return 0;
+    }
+    if (inventario[totalProductos].cantidad < 0) return 0;
+
+    printf("Ingrese Precio: ");
+    if (scanf("%f", &inventario[totalProductos].precio) != 1) {
+        while(getchar() != '\n');
+        return 0;
+    }
+    if (inventario[totalProductos].precio <= 0) return 0;
+
+    inventario[totalProductos].total = inventario[totalProductos].cantidad * inventario[totalProductos].precio;
+
+    totalProductos++;
+    return 1;
+}
+
+int modificar_producto() {
+    int cod, indice = -1;
+    printf("\n--- MODIFICAR PRODUCTO ---\n");
+    printf("Ingrese codigo: ");
+    if (scanf("%d", &cod) != 1) {
+        while(getchar() != '\n');
+        return 0;
+    }
+
+    for (int i = 0; i < totalProductos; i++) {
+        if (inventario[i].codigo == cod) {
+            indice = i;
+            break;
+        }
+    }
+
+    if (indice == -1) return 0; 
+
+    printf("Producto: %s | Cantidad: %d | Precio: %.2f | Total: %.2f\n", 
+           inventario[indice].nombre, inventario[indice].cantidad, 
+           inventario[indice].precio, inventario[indice].total);
+
+    int opcionMod;
+    printf("Modificar: 1.Nombre 2.Cantidad 3.Precio: ");
+    if (scanf("%d", &opcionMod) != 1) {
+        while(getchar() != '\n');
+        return 0;
+    }
+
+    switch(opcionMod) {
+        case 1:
+            printf("Nuevo Nombre: ");
+            scanf(" %49[^\n]", inventario[indice].nombre);
+            for(int i = 0; inventario[indice].nombre[i] != '\0'; i++) {
+                if(inventario[indice].nombre[i] == ',') inventario[indice].nombre[i] = ' '; 
+            }
+            break;
+
+        case 2:
+            {
+                int nuevaCant;
+                printf("Nueva Cantidad: ");
+                if (scanf("%d", &nuevaCant) == 1 && nuevaCant >= 0) {
+                    inventario[indice].cantidad = nuevaCant;
+                    inventario[indice].total = inventario[indice].cantidad * inventario[indice].precio;
+                } else {
+                    printf("Entrada invalida. Cancelando cambio.\n");
+                    while(getchar() != '\n');
+                }
+            }
+            break;
+
+        case 3:
+            {
+                float nuevoPrecio;
+                printf("Nuevo Precio: ");
+                if (scanf("%f", &nuevoPrecio) == 1 && nuevoPrecio > 0) {
+                    inventario[indice].precio = nuevoPrecio;
+                    inventario[indice].total = inventario[indice].cantidad * inventario[indice].precio;
+                } else {
+                    printf("Precio invalido. Cancelando cambio.\n");
+                    while(getchar() != '\n');
+                }
+            }
+            break;
+            
+        default:
+            return 0; 
+    }
+    return 1;
+}
