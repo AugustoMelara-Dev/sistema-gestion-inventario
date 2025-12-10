@@ -292,3 +292,48 @@ int buscar_producto() {
     }
     return 0; 
 }
+int reporte_stock_bajo() {
+    if (totalProductos == 0) return 0;
+
+    int contadorBajos = 0;
+    printf("\n--- REPORTE STOCK BAJO (<10) ---\n");
+    printf("%-10s %-20s %-10s\n", "CODIGO", "NOMBRE", "STOCK");
+    printf("------------------------------------------\n");
+
+    for (int i = 0; i < totalProductos; i++) {
+        if (inventario[i].cantidad < 10) {
+            printf("%-10d %-20s %-10d\n", 
+                   inventario[i].codigo, 
+                   inventario[i].nombre, 
+                   inventario[i].cantidad);
+            contadorBajos++;
+        }
+    }
+
+    if (contadorBajos > 0) return 1;
+    return 0;
+}
+
+int reporte_estadisticas() {
+    if (totalProductos == 0) return 0; 
+
+    float totalValorGlobal = 0.0; 
+    int contadorProductos = 0; 
+    int totalStockFisico = 0; 
+
+    printf("\n--- REPORTE GENERAL Y ESTADISTICAS ---\n");
+
+    for (int i = 0; i < totalProductos; i++) {
+        totalValorGlobal += inventario[i].total; 
+        contadorProductos++; 
+        totalStockFisico += inventario[i].cantidad;
+    }
+
+    printf(">> Estadisticas Generadas:\n");
+    printf("1. Cantidad de Productos Unicos (Codigos): %d\n", contadorProductos);
+    printf("2. Cantidad Total de Articulos (Stock):    %d\n", totalStockFisico);
+    printf("3. VALOR TOTAL DEL INVENTARIO:             $%.2f\n", totalValorGlobal);
+    printf("------------------------------------------\n");
+
+    return 1;
+}
