@@ -23,6 +23,14 @@ int guardar_inventario();
 int cargar_inventario();
 int existe_codigo(int cod);
 
+int existe_codigo(int cod) {
+    for (int i = 0; i < totalProductos; i++) {
+        if (inventario[i].codigo == cod) return 1;
+    }
+    return 0;
+}
+
+// Main
 int main() {
     int opcion = -1;
 
@@ -119,15 +127,8 @@ int main() {
     return 0;
 }
 
-// Función auxiliar
-int existe_codigo(int cod) {
-    for (int i = 0; i < totalProductos; i++) {
-        if (inventario[i].codigo == cod) return 1;
-    }
-    return 0;
-}
-
 // Gestión de Productos (CRUD) 
+
 int agregar_producto() {
     if (totalProductos >= 100) {
         printf("Inventario lleno (Max 100).\n");
@@ -251,6 +252,7 @@ int modificar_producto() {
     }
     return 1;
 }
+
 int mostrar_todos() {
     if (totalProductos == 0) return 0; 
 
@@ -267,6 +269,8 @@ int mostrar_todos() {
     }
     return 1; 
 }
+
+//  Búsqueda, filtros y Reportes, Estadísticas 
 
 int buscar_producto() {
     if (totalProductos == 0) return 0; 
@@ -292,6 +296,7 @@ int buscar_producto() {
     }
     return 0; 
 }
+
 int reporte_stock_bajo() {
     if (totalProductos == 0) return 0;
 
@@ -337,6 +342,9 @@ int reporte_estadisticas() {
 
     return 1;
 }
+
+// Persistencia de Datos (Archivos)
+
 int guardar_inventario() {
     FILE *archivo = fopen("inventario.txt", "w");
     if (archivo == NULL) return 0;
@@ -380,5 +388,3 @@ int cargar_inventario() {
 
     return 1; 
 }
-git add main.c
-git commit -m "feat: Implementar persistencia de datos en archivo CSV"
