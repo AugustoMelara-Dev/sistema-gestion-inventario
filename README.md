@@ -63,10 +63,12 @@ sistema-gestion-inventario/
 ├── .gitignore          # Configuración de exclusiones de Git
 └── README.md           # Documentación del proyecto
 
-👨‍💻 Autor
-Augusto José Melara Milla Estudiante de Ingeniería en Ciencias de la Computación Universidad Católica de Honduras (UNICAH)
+## 👨‍💻 Autor
+**Augusto José Melara Milla**
+*Estudiante de Ingeniería en Ciencias de la Computación*
+*Universidad Católica de Honduras (UNICAH)*
 
-📅 Fecha de Finalización: 10 de Diciembre, 2025
+📅 **Fecha de Finalización:** 10 de Diciembre, 2025
 
-📄 Licencia
+## 📄 Licencia
 Este proyecto es de uso académico y educativo.
