@@ -251,3 +251,44 @@ int modificar_producto() {
     }
     return 1;
 }
+int mostrar_todos() {
+    if (totalProductos == 0) return 0; 
+
+    printf("\n%-10s %-20s %-10s %-10s %-10s\n", "CODIGO", "NOMBRE", "CANTIDAD", "PRECIO", "TOTAL");
+    printf("----------------------------------------------------------------\n");
+    
+    for(int i = 0; i < totalProductos; i++) {
+        printf("%-10d %-20s %-10d $%-9.2f $%-9.2f\n", 
+            inventario[i].codigo, 
+            inventario[i].nombre, 
+            inventario[i].cantidad, 
+            inventario[i].precio, 
+            inventario[i].total);
+    }
+    return 1; 
+}
+
+int buscar_producto() {
+    if (totalProductos == 0) return 0; 
+
+    int cod;
+    printf("\n--- BUSCAR PRODUCTO ---\n");
+    printf("Ingrese codigo a buscar: ");
+    if (scanf("%d", &cod) != 1) {
+        while(getchar() != '\n');
+        return 0;
+    }
+
+    for (int i = 0; i < totalProductos; i++) {
+        if (inventario[i].codigo == cod) {
+            printf("\n>>> ENCONTRADO:\n");
+            printf("Codigo:   %d\n", inventario[i].codigo);
+            printf("Nombre:   %s\n", inventario[i].nombre);
+            printf("Cantidad: %d\n", inventario[i].cantidad);
+            printf("Precio:   $%.2f\n", inventario[i].precio);
+            printf("Total:    $%.2f\n", inventario[i].total); 
+            return 1;
+        }
+    }
+    return 0; 
+}
