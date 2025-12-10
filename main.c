@@ -337,3 +337,48 @@ int reporte_estadisticas() {
 
     return 1;
 }
+int guardar_inventario() {
+    FILE *archivo = fopen("inventario.txt", "w");
+    if (archivo == NULL) return 0;
+
+    for (int i = 0; i < totalProductos; i++) {
+        fprintf(archivo, "%d,%s,%d,%.2f\n", 
+                inventario[i].codigo, inventario[i].nombre, 
+                inventario[i].cantidad, inventario[i].precio);
+    }
+    fclose(archivo);
+    return 1;
+}
+
+int cargar_inventario() {
+    FILE *archivo = fopen("inventario.txt", "r");
+    if (archivo == NULL) {
+        printf("Aviso: No se encontro archivo 'inventario.txt'. Iniciando vacio.\n");
+        system("pause"); 
+        return 0;
+    }
+    
+    totalProductos = 0;
+    while (fscanf(archivo, "%d,%[^,],%d,%f\n", 
+           &inventario[totalProductos].codigo,
+           inventario[totalProductos].nombre,
+           &inventario[totalProductos].cantidad,
+           &inventario[totalProductos].precio) != EOF) {
+        
+        inventario[totalProductos].total = inventario[totalProductos].cantidad * inventario[totalProductos].precio;
+
+        totalProductos++;
+        if(totalProductos >= 100) break;
+    }
+    fclose(archivo);
+
+    if (totalProductos > 0) {
+        printf("\n>>> SISTEMA INICIADO: %d PRODUCTOS CARGADOS\n", totalProductos);
+        mostrar_todos();
+        system("pause");
+    }
+
+    return 1; 
+}
+git add main.c
+git commit -m "feat: Implementar persistencia de datos en archivo CSV"
